@@ -1,0 +1,101 @@
+
+
+<?php 
+
+/*
+Essa função serve para ver o tempo que já passou
+echo tempo_passado(date("Y-m-d H:i:s)); //Conta com minutos e segundos
+echo tempo_passado(date("Y-m-d)); //Conta com dias
+*/
+function tempo_passado($data){
+	$ds = new DateTime($data);
+	$df = new DateTime(date("Y-m-d H:i:s"));
+	$dt = $ds->diff($df); 
+	//echo "<em class='small'>Há ".$dt->d."d., ".$dt->h."h. e ".$dt->m."min</em>";
+	if($dt->y==0){
+		if($dt->m==0){
+			if($dt->d==0){
+				if($dt->h==0){
+					$ha_tempos = $dt->i." minutos";
+				} elseif($dt->h==1){
+					if($dt->i==0){
+						$ha_tempos = $dt->h." hora exata";
+					} else {
+						$ha_tempos = $dt->h." hora e ".$dt->i." min.";
+					}
+				} elseif($dt->h>1){
+					$ha_tempos = $dt->h." hrs. e ".$dt->i." min.";
+
+				}
+			} elseif($dt->d==1){
+				$ha_tempos = $dt->d."d. e ".$dt->h."h."; // (Ontem)
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->d." dias";
+			}
+		} elseif($dt->m==1){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->m." mes, ".$dt->d." dia";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->m." mes, ".$dt->d." dias";
+			}
+		} elseif($dt->m>1){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->m." meses e ".$dt->d." dia";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->m." meses e ".$dt->d." dias";
+			}
+		}
+
+	} elseif($dt->y==1){
+		if($dt->m==0){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->y." ano e ".$dt->d." dia";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->y." ano e ".$dt->d." dias";
+			}
+		} elseif($dt->m==1){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->y." ano, 1 mês e ".$dt->d." dia";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->y." ano, 1 mês e ".$dt->d." dias";
+			}
+		} elseif($dt->m>1){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->y." ano e".$dt->m." meses";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->y." ano e ".$dt->m." meses";
+			}
+		}
+	} elseif($dt->y>=2){
+		if($dt->m==0){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->y." anos e ".$dt->d." dia";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->y." anos e ".$dt->d." dias";
+			}
+		} elseif($dt->m==1){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->y." anos, 1 mês e ".$dt->d." dia";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->y." anos, 1 mês e ".$dt->d." dias";
+			}
+		} elseif($dt->m>1){
+			if($dt->d==0 or $dt->d==1){
+				$ha_tempos = $dt->y." anos e ".$dt->m. " mes";
+			} elseif($dt->d>=2){
+				$ha_tempos = $dt->y." anos e ".$dt->m. " meses";
+			}
+		}
+	}
+	//$output = "<em class='small opacity-75X '>Há ".$ha_tempos."</em>";
+	$output = $ha_tempos;
+	return $output;
+}
+
+//Datas precisam vir em "Y-m-d H:i:s" ou "Y-m-d"
+echo "<em class='small'>Foi há ".tempo_passado($row["data"]." ".$row["hora"])."</em>";
+echo "<em class='small'>Foi há ".tempo_passado($row["data_hora"].")."</em>";
+echo "<em class='small'>Foi há ".tempo_passado($row["data"].")."</em>";
+
+
+?>
